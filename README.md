@@ -1,3 +1,5 @@
 # Segundo-Parcial-de-programacion-
 
-Se crea la clase padre con el nombre Vehiculo y sus atributos placa, tipo y propietario
+1) Se crea la clase padre con el nombre Vehiculo y sus atributos placa, tipo y propietario
+2) Se creo un constructor para inicializar el objeto Vehiculo 
+3) Se creo metodos para devolver los valores de los atributos de la clase
