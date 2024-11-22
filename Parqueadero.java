@@ -24,3 +24,10 @@ public String toString() {
     return "Placa: " + placa + ", Tipo: " + tipo + ", Propietario: " + propietario;
 }
 }
+
+
+class EspacioParqueadero {
+    private int numeroEspacio;
+    private String tipoPermitido;
+    private boolean estado;
+}
