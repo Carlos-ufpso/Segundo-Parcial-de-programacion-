@@ -1,4 +1,7 @@
 
+import java.util.ArrayList;
+import java.util.List;
+
 class Vehiculo {
     private String placa;
     private String tipo;
@@ -72,4 +75,82 @@ public void liberarEspacio() {
 public String toString() {
     return "Espacio " + numeroEspacio + " (" + tipoPermitido + "): " + (estado ? "Ocupado" : "Disponible");
 }
+}
+
+class GestionParqueadero {
+    private List<EspacioParqueadero> espacios;
+    private List<Vehiculo> vehiculos;
+
+    public GestionParqueadero() {
+        espacios = new ArrayList<>();
+        vehiculos = new ArrayList<>();
+    }
+
+    public void registrarEspacio(EspacioParqueadero espacio) {
+        espacios.add(espacio);
+    }
+
+    public void registrarVehiculo(Vehiculo vehiculo) {
+        vehiculos.add(vehiculo);
+    }
+
+    public void mostrarEspaciosDisponibles() {
+        System.out.println("Espacios disponibles:");
+        for (EspacioParqueadero espacio : espacios) {
+            if (!espacio.getEstado()) {
+                System.out.println(espacio);
+            }
+        }
+    }
+
+    public void asignarEspacio(Vehiculo vehiculo) {
+        boolean asignado = false;
+        for (EspacioParqueadero espacio : espacios) {
+            if (!espacio.getEstado() && espacio.getTipoPermitido().equals(vehiculo.getTipo())) {
+                espacio.asignarVehiculo(vehiculo);
+                asignado = true;
+                break;
+            }
+        }
+
+        if (!asignado) {
+            System.out.println("No se pudo asignar un espacio para el vehículo: " + vehiculo);
+        }
+    }
+
+    public void liberarEspacio(int numeroEspacio) {
+        for (EspacioParqueadero espacio : espacios) {
+            if (espacio.getNumeroEspacio() == numeroEspacio) {
+                espacio.liberarEspacio();
+                return;
+            }
+        }
+        System.out.println("No se encontró el espacio con número " + numeroEspacio);
+    }
+}
+
+public class Parqueadero {
+    public static void main(String[] args) {
+        GestionParqueadero gestion = new GestionParqueadero();
+
+        gestion.registrarEspacio(new EspacioParqueadero(1, "carro"));
+        gestion.registrarEspacio(new EspacioParqueadero(2, "moto"));
+        gestion.registrarEspacio(new EspacioParqueadero(3, "carro"));
+        gestion.registrarEspacio(new EspacioParqueadero(4, "moto"));
+
+        Vehiculo vehiculo1 = new Vehiculo("ABC123", "carro", "Carlos Pérez");
+        Vehiculo vehiculo2 = new Vehiculo("XYZ456", "moto", "Valerin Hernandez");
+
+        gestion.registrarVehiculo(vehiculo1);
+        gestion.registrarVehiculo(vehiculo2);
+
+        gestion.mostrarEspaciosDisponibles();
+
+        gestion.asignarEspacio(vehiculo1);
+        gestion.asignarEspacio(vehiculo2);
+
+        gestion.liberarEspacio(1);
+
+        gestion.mostrarEspaciosDisponibles();
+    }
 }
